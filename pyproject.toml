@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "mentorlib"
+version = "0.1.0"
+description = ""
+authors = ['MeZKay']
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "mentorlib" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^5.0"
+djangorestframework = "^3.16"
+django-filter = "^25.1"
+markdown = "^3.8"
+
+[tool.poetry.dev-dependencies]
+black = "^24.0"
+isort = "^5.12"
+flake8 = "^7.0"
+pytest = "^8.0"
+pytest-django = "^4.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

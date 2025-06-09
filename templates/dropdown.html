@@ -1,0 +1,51 @@
+<button
+	id="dropdownInformationButton"
+	data-dropdown-toggle="dropdownInformation"
+	type="button"
+>
+	{% include 'partials/users/avatar.html' with user=request.user %}
+</button>
+
+<!-- Dropdown menu -->
+<div
+	id="dropdownInformation"
+	class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600"
+>
+	<div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+		<div>{{user.first_name|default:"Unknown"}} {{user.last_name|default:"Unknown"}}</div>
+		<div class="font-medium truncate">{{user.username}}</div>
+	</div>
+	<ul
+		class="py-2 text-sm text-gray-700 dark:text-gray-200"
+		aria-labelledby="dropdownInformationButton"
+	>
+		<li>
+			<a
+				href="/users/profile"
+				class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+				>Profile</a
+			>
+		</li>
+		<li>
+			<a
+				href="#"
+				class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+				>Settings</a
+			>
+		</li>
+		<li>
+			<a
+				href="#"
+				class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+				>Earnings</a
+			>
+		</li>
+	</ul>
+	<div class="py-2">
+		<a
+			href="/users/logout"
+			class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+			>Déconnexion</a
+		>
+	</div>
+</div>
