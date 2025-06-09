@@ -10,8 +10,6 @@ from django.contrib.contenttypes.models import ContentType
 def index(request):
     context = {}
     context['courses'] = CourseFilter(request.GET, queryset=Course.objects.all())
-    te = context['courses']
-    breakpoint()
     return render(request, 'courses/index.html', context=context)
 
 def course_details(request, id):

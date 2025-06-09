@@ -18,3 +18,6 @@ class UserNote(models.Model):
     mentor = models.ForeignKey(User, on_delete=models.CASCADE)
     note = models.TextField()
     date = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return f"{self.id} Student<{self.user.username}>Mentor<{self.mentor.username}>"

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import requires_csrf_token
-from mentorlib.apps.users.models import User
+from mentorlib.apps.users.models import User, UserNote
+from mentorlib.apps.configuration.models import Resource
 # Create your views here.
 
 def logout_view(request):
@@ -57,5 +58,40 @@ def register_view(request):
         
     return render(request, "users/register.html", context=context)
 
-def profile_view(request):
-    return render(request, "users/profile.html")
+def profile_view(request, id):
+    context = {
+        "user":User.objects.get(id=id),
+        "resources":Resource.objects.all()
+    }
+    return render(request, "users/profile.html", context=context)
+
+@requires_csrf_token
+def profile_note_view(request, id, resource_id):
+    user = User.objects.get(id=id)
+    context = {
+        "user":user,
+        "user_notes":UserNote.objects.filter(user__id=id, resource__id=resource_id).order_by('-date'),
+        "messages":[]
+    }
+
+    action = request.GET.get("action")
+    
+    if action == "delete":
+        try:
+            user_note_id = request.GET.get("user_note")
+            user_note = UserNote.objects.get(id=user_note_id)
+
+            #TODO: allows admin, or users that have the permission to remove
+            if user_note.mentor == request.user:
+                user_note.delete()
+        except Exception:
+            context["messages"].append({"text":"La note n'existe pas", "color":"red"})
+
+    if request.method == "POST":
+        if request.user != user or user.is_superuser:
+            #User can't note himself
+            note = request.POST["message"]
+            new_note = UserNote(user=user, mentor=request.user, note=note, resource=Resource.objects.get(id=resource_id))
+            new_note.save()
+
+    return render(request, "users/profile/edit_note.html", context=context)

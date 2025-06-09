@@ -1,4 +1,6 @@
 {% load courses_utils %}
+{% load configuration_utils %}
+{% load users_utils %}
 <div class="mb-1">
 	<a href="/courses/{{course.id}}">
 		<div
@@ -22,14 +24,14 @@
 			</div>
 			<div class="flex mt-3">
 				<div class="w-1/2">
-					<div>{{course.user.first_name}} {{course.user.last_name}}</div>
-					<div class="text-xs">{{course.user.semester.year.name}}</div>
+					<div>{{course.mentor|get_fullname}}</div>
+					<div class="text-xs">{{course.mentor.semester.year.name}}</div>
 				</div>
 
 				<div class="w-1/2 text-end">
-					<div>{courseDate[0]}</div>
+					<div>{{course.date|format_date_to_local}}</div>
 					<div class="text-xs">
-						à {courseDate[1]} durée {formatToHoursAndMinutes(course.duration)}
+						Durée {{course.duration}} min
 					</div>
 				</div>
 			</div>
