@@ -5,11 +5,13 @@ from mentorlib.apps.configuration.models import Resource
 from django.views.decorators.csrf import requires_csrf_token
 from datetime import datetime
 from mentorlib.apps.courses.filters import CourseFilter
+from mentorlib.apps.courses.forms import CourseFilterForm
 from django.contrib.contenttypes.models import ContentType
 
 def index(request):
     context = {}
     context['courses'] = CourseFilter(request.GET, queryset=Course.objects.all())
+    context["filter_form"] = CourseFilterForm()
     return render(request, 'courses/index.html', context=context)
 
 def course_details(request, id):
@@ -33,6 +35,11 @@ def course_details(request, id):
             course_registered = CourseRegisteredStudent(student=request.user, course=course)
             course_registered.save()
             context["messages"].append({"color":"green","text":"Votre inscription a bien été prit en compte"})
+
+    if request.method == "POST":
+        course_registered = CourseRegisteredStudent.objects.get(student=request.user, course=course)
+        course_registered.note = request.POST.get("student_note")
+        course_registered.save()
 
     return render(request, 'courses/details.html', context=context)
 

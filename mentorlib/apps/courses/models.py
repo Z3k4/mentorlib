@@ -22,7 +22,7 @@ class Course(models.Model):
 
     @property
     def available(self):
-        return self.status !=2 and self.date > datetime.now()
+        return self.status != 2 and self.date > datetime.now()
     
     def __str__(self):
         return f"{self.resource} - {self.mentor}"
@@ -30,9 +30,9 @@ class Course(models.Model):
 class CourseRegisteredStudent(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="registered_students")
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="registered_courses")
+    note = models.TextField(blank=True)
 
 class Comments(models.Model):
-    __tablename__ = "comments"
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="comments")
     comment = models.CharField(max_length=255)

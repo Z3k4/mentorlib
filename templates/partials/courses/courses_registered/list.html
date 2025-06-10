@@ -8,14 +8,14 @@
 	</div>
 	<div class="flow-root">
 		<ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-			{% if course.registered_students|length == 0 %}
+			{% if course.registered_students.all|length == 0 %}
 			<li>
 				<p class="text-gray-900 dark:text-gray-300">
 					Pas d'étudiants inscrits
 				</p>
 			</li>
 			{% else %}
-			{% for course_registered in course.registered_students %}
+			{% for course_registered in course.registered_students.all %}
 			<li class="py-3 sm:py-4">
 				{% include 'partials/users/user.html' with user=course_registered.student %}
 			</li>
