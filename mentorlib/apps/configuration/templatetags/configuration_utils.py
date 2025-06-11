@@ -28,3 +28,12 @@ def get_filter_template(filter):
 @register.filter
 def get_attr(value, attr):
     return value.getlist(attr, [])
+
+@register.filter
+def get_select_type(field):
+    return 'multiple' if field.field.widget.allow_multiple_selected else ''
+
+@register.filter
+def test(value):
+    breakpoint()
+    return value

@@ -5,8 +5,8 @@ from mentorlib.apps.configuration.models import Resource
 from django.views.decorators.csrf import requires_csrf_token
 from datetime import datetime
 from mentorlib.apps.courses.filters import CourseFilter
-from mentorlib.apps.courses.forms import CourseFilterForm
-from django.contrib.contenttypes.models import ContentType
+from mentorlib.apps.courses.forms import CourseFilterForm, CourseUploadForm
+from mentorlib.core.utilities.file import handle_course_files
 
 def index(request):
     context = {}
@@ -15,11 +15,11 @@ def index(request):
     return render(request, 'courses/index.html', context=context)
 
 def course_details(request, id):
-
     course = Course.objects.get(id=id)
     context = {
         "messages":[],
-        "course":course
+        "course":course,
+        "file_upload":CourseUploadForm()
     }
     action = request.GET.get("action")
 
@@ -36,7 +36,7 @@ def course_details(request, id):
             course_registered.save()
             context["messages"].append({"color":"green","text":"Votre inscription a bien été prit en compte"})
 
-    if request.method == "POST":
+    if request.method == "POST" and request.POST.get('student_note'):
         course_registered = CourseRegisteredStudent.objects.get(student=request.user, course=course)
         course_registered.note = request.POST.get("student_note")
         course_registered.save()
@@ -94,3 +94,10 @@ def course_ask(request):
     resources = Resource.objects.all()
     return render(request, 'courses/ask.html', context={"resources":resources})
     
+
+@requires_csrf_token
+def course_files(request, id):
+    course = Course.objects.get(id=id)
+    handle_course_files(course, request.POST['file'])
+
+    return course_details(request, id)

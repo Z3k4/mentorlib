@@ -21,3 +21,11 @@ class UserNote(models.Model):
 
     def __str__(self):
         return f"{self.id} Student<{self.user.username}>Mentor<{self.mentor.username}>"
+    
+class UserUpload(models.Model):
+    """UserUpload model"""
+
+    filename = models.CharField(max_length=255)
+    filepath = models.CharField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="uploads")
+    type = models.CharField()

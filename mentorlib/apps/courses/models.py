@@ -1,5 +1,5 @@
 from django.db import models
-from mentorlib.apps.users.models import User
+from mentorlib.apps.users.models import User, UserUpload
 from datetime import datetime
 from mentorlib.apps.configuration.models import Resource
 
@@ -12,6 +12,7 @@ class AskedCourse(models.Model):
     approved_date = models.DateTimeField()
 
 class Course(models.Model):
+    """Course model"""
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     mentor = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField("Date created")
@@ -38,3 +39,8 @@ class Comments(models.Model):
     comment = models.CharField(max_length=255)
     date = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
+
+class CourseUploadFile(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="files")
+    user_upload = models.ForeignKey(UserUpload, on_delete=models.CASCADE)
+    
