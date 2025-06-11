@@ -3,5 +3,5 @@ from mentorlib.api.apps.users.views import UsersView
 
 
 urlpatterns = [
-    path('', UsersView.as_view(), name='users'),
+    path("", UsersView.as_view(), name="users"),
 ]

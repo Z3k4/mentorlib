@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0003_usernote'),
+        ("users", "0003_usernote"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='usernote',
-            name='date',
+            model_name="usernote",
+            name="date",
             field=models.DateTimeField(default=datetime.datetime.now),
         ),
     ]

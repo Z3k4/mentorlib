@@ -10,6 +10,7 @@ class UserView(APIView):
         serializer = UserSerializer(items, many=False)
         return Response(serializer.data)
 
+
 class UserNotesView(APIView):
     def get(self, request, user_id):
         items = UserNote.objects.filter(user=user_id)
@@ -17,11 +18,13 @@ class UserNotesView(APIView):
 
         return Response(serializer.data)
 
+
 class AllUsersView(APIView):
     def get(self, request):
         items = User.objects.all()
         serializer = UserSerializer(items, many=True)
         return Response(serializer.data)
+
 
 class AllUsersNotesView(APIView):
     def get(self, request):

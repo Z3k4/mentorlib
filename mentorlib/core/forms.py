@@ -3,5 +3,5 @@ from django.forms.renderers import TemplatesSetting
 
 
 class StylizedForm(forms.Form):
-    template_name = f"components/form_render.html"
+    template_name = "components/form_render.html"
     default_renderer = TemplatesSetting()

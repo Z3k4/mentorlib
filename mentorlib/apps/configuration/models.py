@@ -1,22 +1,23 @@
 from django.db import models
 from mentorlib.apps.courses.templatetags.courses_utils import get_resource_name
 
+
 class Department(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
-class StudyYear(models.Model):
 
+class StudyYear(models.Model):
     order = models.IntegerField()
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
-class Semester(models.Model):
 
+class Semester(models.Model):
     order = models.IntegerField()
     semester = models.IntegerField()
 
@@ -25,8 +26,8 @@ class Semester(models.Model):
     def __str__(self):
         return f"{self.year} - S{self.semester}"
 
-class Resource(models.Model):
 
+class Resource(models.Model):
     number = models.IntegerField()
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
@@ -36,4 +37,3 @@ class Resource(models.Model):
 
     def __str__(self):
         return f"{get_resource_name(self)} {self.name}"
-    

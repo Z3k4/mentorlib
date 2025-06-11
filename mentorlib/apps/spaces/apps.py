@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class SpacesConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'mentorlib.apps.courses'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "mentorlib.apps.courses"

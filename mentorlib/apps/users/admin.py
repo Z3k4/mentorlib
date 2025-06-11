@@ -1,7 +1,13 @@
 from django.contrib import admin
-from mentorlib.apps.configuration.models import Resource, StudyYear, Semester, Department
+from mentorlib.apps.configuration.models import (
+    Resource,
+    StudyYear,
+    Semester,
+    Department,
+)
 from mentorlib.apps.users.models import User
 # Register your models here.
+
 
 class UserAdmin(admin.ModelAdmin):
     pass

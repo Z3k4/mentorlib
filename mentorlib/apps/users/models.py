@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from mentorlib.apps.configuration.models import Resource
 from datetime import datetime
 
+
 class User(AbstractUser):
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=255)
@@ -21,7 +22,8 @@ class UserNote(models.Model):
 
     def __str__(self):
         return f"{self.id} Student<{self.user.username}>Mentor<{self.mentor.username}>"
-    
+
+
 class UserUpload(models.Model):
     """UserUpload model"""
 
