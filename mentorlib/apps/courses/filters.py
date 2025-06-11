@@ -10,6 +10,8 @@ class CourseFilter(filters.FilterSet):
     
     mentor = filters.CharFilter(method='search_mentor')
 
+    
+
     def search_mentor(self, queryset, name, value):
         
         return queryset.filter(Q(mentor__first_name__icontains=value) | Q(mentor__last_name__icontains=value)) 

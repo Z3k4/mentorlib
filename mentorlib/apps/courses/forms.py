@@ -1,10 +1,11 @@
 from django import forms
+from mentorlib.core.forms import StylizedForm
 from mentorlib.apps.configuration.models import Resource
 from mentorlib.settings import BASE_DIR
 
-class CourseFilterForm(forms.Form):
+class CourseFilterForm(StylizedForm):
     resource = forms.ModelMultipleChoiceField(queryset=Resource.objects.all())
     mentor = forms.CharField(required=False)
 
-class CourseUploadForm(forms.Form):
+class CourseUploadForm(StylizedForm):
     file = forms.FileField(widget=forms.FileInput)

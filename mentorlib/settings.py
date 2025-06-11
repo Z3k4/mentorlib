@@ -39,14 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
     'django_filters',
     'rest_framework',
+    'compressor',
     'mentorlib',
     'mentorlib.apps.configuration',
     'mentorlib.apps.courses',
     'mentorlib.apps.users',
     'mentorlib.api',
-    'compressor',
 ]
 
 MIDDLEWARE = [
@@ -152,8 +153,5 @@ REST_FRAMEWORK = {
     ],
 }
 
-class CustomFormRenderer(TemplatesSetting):
-    form_template_name = "components/form_render.html"
-
-
-FORM_RENDERER = "mentorlib.settings.CustomFormRenderer"
+TEMPLATE_DIRS = (BASE_DIR / 'templates', )
+FORM_RENDER = 'django.forms.renderers.TemplatesSetting'

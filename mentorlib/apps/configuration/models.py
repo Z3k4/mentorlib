@@ -36,3 +36,4 @@ class Resource(models.Model):
 
     def __str__(self):
         return f"{get_resource_name(self)} {self.name}"
+    
