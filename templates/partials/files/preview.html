@@ -1,0 +1,3 @@
+{% if file.metadata.type == 'pdf' %}
+    {% include 'partials/files/preview/pdf.html' with file=file %}
+{% endif %}

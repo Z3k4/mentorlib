@@ -7,7 +7,7 @@ from datetime import datetime
 from mentorlib.apps.courses.filters import CourseFilter
 from mentorlib.apps.courses.forms import CourseFilterForm, CourseUploadForm
 from mentorlib.core.utilities.file import handle_course_files
-
+from django.urls import reverse
 
 def index(request):
     context = {}
@@ -54,7 +54,7 @@ def course_details(request, id):
         course_registered.note = request.POST.get("student_note")
         course_registered.save()
 
-    return render(request, "courses/details.html", context=context)
+    return render(request, "courses/tabs/informations.html", context=context)
 
 
 def duration_to_minutes(duration: str):
@@ -115,6 +115,16 @@ def course_ask(request):
 @requires_csrf_token
 def course_files(request, id):
     course = Course.objects.get(id=id)
-    handle_course_files(course, request.POST["file"])
+    context = {'form':CourseUploadForm(), "course": course}
+    if request.method == "POST":
+        handle_course_files(course, request.user, request.FILES["file"])
 
-    return course_details(request, id)
+    return render(request, 'courses/tabs/documents.html', context=context)
+
+@requires_csrf_token
+def course_students_registered(request, id):
+    course = Course.objects.get(id=id)
+    context = {"messages": [], "course": course}
+
+    return render(request, 'courses/tabs/register_informations.html', context=context)
+

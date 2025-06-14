@@ -50,7 +50,18 @@ class Comments(models.Model):
     date = models.DateTimeField(default=datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
 
+    class Meta:
+        permissions = [
+            ("delete_comment", "Allow user to delete comment on course"),
+            ("change_status", "Allow user to lock / cancel course")
+        ]
+
 
 class CourseUploadFile(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="files")
     user_upload = models.ForeignKey(UserUpload, on_delete=models.CASCADE)
+
+    class Meta:
+        permissions = [
+            ("course_uploads", "Allow user to upload file for course")
+        ]

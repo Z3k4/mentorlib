@@ -1,6 +1,7 @@
 from django import forms
 from mentorlib.core.forms import StylizedForm
 from mentorlib.apps.configuration.models import Resource
+from mentorlib.apps.users.validators import FileValidator
 
 
 class CourseFilterForm(StylizedForm):
@@ -9,4 +10,4 @@ class CourseFilterForm(StylizedForm):
 
 
 class CourseUploadForm(StylizedForm):
-    file = forms.FileField(widget=forms.FileInput)
+    file = forms.FileField(widget=forms.FileInput, validators=[FileValidator(['pdf'])])

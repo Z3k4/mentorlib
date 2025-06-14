@@ -43,3 +43,13 @@ def get_select_type(field):
 def test(value):
     breakpoint()
     return value
+
+
+@register.filter
+def get_active(url:str,args:str):
+    arg_list = args.split(',')
+    path = arg_list[0]
+    class_name = arg_list[1]
+    default_class_name = arg_list[2]
+    print(path, url)
+    return class_name if url == path else default_class_name
