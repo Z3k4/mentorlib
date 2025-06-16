@@ -1,3 +1,5 @@
-{% if file.metadata.type == 'pdf' %}
+{% if file.user_upload.metadata.extension == 'pdf' %}
     {% include 'partials/files/preview/pdf.html' with file=file %}
+{% elif file.user_upload.metadata.extension == 'png' %}
+    {% include 'partials/files/preview/image.html' with file=file %}
 {% endif %}

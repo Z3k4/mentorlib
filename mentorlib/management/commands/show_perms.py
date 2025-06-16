@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Permission
 
 
@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         queryset = Permission.objects.all()
-        
+
         for perm in queryset:
-            if perm.content_type.model in options['m']:
+            if perm.content_type.model in options["m"]:
                 self.stdout.write(f"{perm.content_type.model}.{perm.codename}")

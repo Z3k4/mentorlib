@@ -2,39 +2,39 @@
 {% load configuration_utils %}
 {% load users_utils %}
 <div class="mb-1">
-	<a href="/courses/{{course.id}}">
-		<div
-			class="flex flex-col p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
-		>
-			<div class="flex justify-between w-full items-center mb-1">
-				<span class="font-bold">{{course.resource}}</span>
-				<div>
-					{% if course.remote %}
-					<span
-						class="top-4 right-6 text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-3 py-2 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
-						>Présentiel</span
-					>
-					{% else %}
-					<span
-						class="top-4 right-6 text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 text-center mr-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900"
-						>Distanciel</span
-					>
-					{% endif %}
-				</div>
-			</div>
-			<div class="flex mt-3">
-				<div class="w-1/2">
-					<div>{{course.mentor|get_fullname}}</div>
-					<div class="text-xs">{{course.mentor.semester.year.name}}</div>
-				</div>
+    <a href="/courses/{{course.id}}">
+        <div
+            class="flex flex-col p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+        >
+            <div class="flex justify-between w-full items-center mb-1">
+                <span class="font-bold">{{course.resource}}</span>
+                <div>
+                    {% if course.remote %}
+                        <span
+                            class="top-4 right-6 text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-3 py-2 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
+                        >Présentiel</span
+                            >
+                    {% else %}
+                        <span
+                            class="top-4 right-6 text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 text-center mr-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900"
+                        >Distanciel</span
+                            >
+                    {% endif %}
+                </div>
+            </div>
+            <div class="flex mt-3">
+                <div class="w-1/2">
+                    <div>{{course.mentor|get_fullname}}</div>
+                    <div class="text-xs">{{course.mentor.semester.year.name}}</div>
+                </div>
 
-				<div class="w-1/2 text-end">
-					<div>{{course.date|format_date_to_local}}</div>
-					<div class="text-xs">
-						Durée {{course.duration}} min
-					</div>
-				</div>
-			</div>
-		</div>
-	</a>
+                <div class="w-1/2 text-end">
+                    <div>{{course.date|format_date_to_local}}</div>
+                    <div class="text-xs">
+                        Durée {{course.duration}} min
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
 </div>

@@ -7,22 +7,30 @@ import filetype
 from django.core.exceptions import PermissionDenied
 import PyPDF2
 
+
 def get_file_extension(file):
     """
-        Retrieve file extension base on MIME data
+    Retrieve file extension base on MIME data
     """
     guess = filetype.guess(file)
     return guess.extension
 
-def handle_course_files(course: Course, user:User, file):
+
+def handle_course_files(course: Course, user: User, file):
     user_upload = handle_files(user, file)
     if user_upload:
-        course_upload =  CourseUploadFile(course=course, user_upload=user_upload)
+        course_upload = CourseUploadFile(course=course, user_upload=user_upload)
         course_upload.save()
 
-def save_file_metadata(user_upload:UserUpload, file):
+
+def save_file_metadata(user_upload: UserUpload, file):
     extension = get_file_extension(file)
-    file_metadatas = {"name":file.name, "size":file.size, 'type':extension}
+    file_metadatas = {
+        "name": file.name,
+        "size": file.size,
+        "extension": extension,
+        "content_type": filetype.guess(file).mime,
+    }
 
     if extension == "pdf":
         pdf_reader = PyPDF2.PdfReader(file)
@@ -33,16 +41,15 @@ def save_file_metadata(user_upload:UserUpload, file):
         metadata.save()
 
 
-
 def handle_files(user: User, file) -> UserUpload:
-    if not user.has_perm('userupload.upload_files'):
+    if not user.has_perm("userupload.upload_files"):
         raise PermissionDenied(f"{user} cannot upload files")
-    
-    path = Path(f'uploads/users/{user.id}')
+
+    path = Path(f"uploads/users/{user.id}")
 
     random_uuid = str(uuid.uuid4())
     extension = get_file_extension(file)
-    file_path = path / f'{random_uuid}.{extension}'
+    file_path = path / f"{random_uuid}.{extension}"
 
     if not path.exists():
         path.mkdir(exist_ok=True, parents=True)

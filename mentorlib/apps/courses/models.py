@@ -2,6 +2,7 @@ from django.db import models
 from mentorlib.apps.users.models import User, UserUpload
 from datetime import datetime
 from mentorlib.apps.configuration.models import Resource
+from django.urls import reverse
 
 
 class AskedCourse(models.Model):
@@ -10,7 +11,7 @@ class AskedCourse(models.Model):
     remote = models.BooleanField(default=False)
     date = models.DateTimeField()
     student = models.ForeignKey(User, on_delete=models.CASCADE)
-    approved_date = models.DateTimeField()
+    approved_date = models.DateTimeField(default=None, null=True)
 
 
 class Course(models.Model):
@@ -53,7 +54,7 @@ class Comments(models.Model):
     class Meta:
         permissions = [
             ("delete_comment", "Allow user to delete comment on course"),
-            ("change_status", "Allow user to lock / cancel course")
+            ("change_status", "Allow user to lock / cancel course"),
         ]
 
 
@@ -62,6 +63,8 @@ class CourseUploadFile(models.Model):
     user_upload = models.ForeignKey(UserUpload, on_delete=models.CASCADE)
 
     class Meta:
-        permissions = [
-            ("course_uploads", "Allow user to upload file for course")
-        ]
+        permissions = [("course_uploads", "Allow user to upload file for course")]
+
+    @property
+    def url(self):
+        return f"{reverse('courses:course_view_files', kwargs={'id': self.course.id, 'file_id': self.user_upload.id})}"

@@ -1,0 +1,8 @@
+{% extends 'spaces/student.html' %}
+{% block student_space %}
+    <div class="grid grid-cols-4 gap-1">
+        {% for course_asked in courses_asked %}
+            {% include 'partials/spaces/accept_card.html' with course=course_asked  link='#' %}
+        {% endfor %}
+    </div>
+{% endblock student_space %}

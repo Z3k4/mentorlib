@@ -46,8 +46,8 @@ def test(value):
 
 
 @register.filter
-def get_active(url:str,args:str):
-    arg_list = args.split(',')
+def get_active(url: str, args: str):
+    arg_list = args.split(",")
     path = arg_list[0]
     class_name = arg_list[1]
     default_class_name = arg_list[2]

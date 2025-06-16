@@ -1,8 +1,10 @@
 import filetype
 from django.forms import ValidationError
 
-class FileValidator():
-    allowed_extensions:list[str]
+
+class FileValidator:
+    allowed_extensions: list[str]
+
     def __init__(self, allowed_extensions):
         self.allowed_extensions = allowed_extensions
 
@@ -20,4 +22,3 @@ class FileValidator():
                 ("%(value)s file extension is not allowed"),
                 params={"value": value},
             )
-    

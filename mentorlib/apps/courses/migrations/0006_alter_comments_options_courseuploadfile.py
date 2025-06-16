@@ -5,26 +5,53 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('courses', '0005_courseregisteredstudent_note'),
-        ('users', '0005_alter_user_options_userupload'),
+        ("courses", "0005_courseregisteredstudent_note"),
+        ("users", "0005_alter_user_options_userupload"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='comments',
-            options={'permissions': [('delete_comment', 'Allow user to delete comment on course'), ('change_status', 'Allow user to lock / cancel course')]},
+            name="comments",
+            options={
+                "permissions": [
+                    ("delete_comment", "Allow user to delete comment on course"),
+                    ("change_status", "Allow user to lock / cancel course"),
+                ]
+            },
         ),
         migrations.CreateModel(
-            name='CourseUploadFile',
+            name="CourseUploadFile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='files', to='courses.course')),
-                ('user_upload', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.userupload')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "course",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="files",
+                        to="courses.course",
+                    ),
+                ),
+                (
+                    "user_upload",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="users.userupload",
+                    ),
+                ),
             ],
             options={
-                'permissions': [('course_uploads', 'Allow user to upload file for course')],
+                "permissions": [
+                    ("course_uploads", "Allow user to upload file for course")
+                ],
             },
         ),
     ]

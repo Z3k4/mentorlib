@@ -1,6 +1,6 @@
 <div class="grid grid-cols-4 grid-rows-1 gap-1">
-	{% for resource in resources %}
-    <a href="/users/{{user.id}}/note/{{resource.id}}">
+    {% for resource in resources %}
+        <a href="/users/{{user.id}}/note/{{resource.id}}">
             <div
                 class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
             >
@@ -9,7 +9,7 @@
                     <span class="text-base text-gray-900 dark:text-white">{{resource.name}}</span>
                 </div>
             </div>
-    </a>
+        </a>
 
-	{% endfor %}
+    {% endfor %}
 </div>

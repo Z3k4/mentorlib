@@ -1,13 +1,21 @@
 from django.shortcuts import render, redirect
-from mentorlib.apps.courses.models import Course, AskedCourse, CourseRegisteredStudent
-from mentorlib.apps.users.models import User
+from mentorlib.apps.courses.models import (
+    Course,
+    AskedCourse,
+    CourseRegisteredStudent,
+    CourseUploadFile,
+)
+from mentorlib.apps.users.models import User, UserUpload
 from mentorlib.apps.configuration.models import Resource
 from django.views.decorators.csrf import requires_csrf_token
 from datetime import datetime
 from mentorlib.apps.courses.filters import CourseFilter
 from mentorlib.apps.courses.forms import CourseFilterForm, CourseUploadForm
 from mentorlib.core.utilities.file import handle_course_files
-from django.urls import reverse
+from django.http import HttpResponse
+from mentorlib.settings import BASE_DIR
+from pathlib import Path
+
 
 def index(request):
     context = {}
@@ -97,7 +105,7 @@ def course_ask(request):
             f"{request.POST['date']} {request.POST['time']}", "%m/%d/%Y %H:%M"
         )
         course = AskedCourse(
-            mentor=User.objects.get(id=request.user.id),
+            student=User.objects.get(id=request.user.id),
             resource=Resource.objects.get(id=request.POST["resource"]),
             date=convert_date,
             duration=duration_to_minutes(request.POST["duration"]),
@@ -115,16 +123,28 @@ def course_ask(request):
 @requires_csrf_token
 def course_files(request, id):
     course = Course.objects.get(id=id)
-    context = {'form':CourseUploadForm(), "course": course}
+    context = {"form": CourseUploadForm(), "course": course}
     if request.method == "POST":
         handle_course_files(course, request.user, request.FILES["file"])
 
-    return render(request, 'courses/tabs/documents.html', context=context)
+    return render(request, "courses/tabs/documents.html", context=context)
+
+
+def course_views_file(request, id, file_id):
+    course_upload_file = CourseUploadFile.objects.get(
+        course=Course.objects.get(id=id), user_upload=UserUpload.objects.get(id=file_id)
+    )
+    path = Path(BASE_DIR) / course_upload_file.user_upload.file_path
+    image_data = open(path, "rb").read()
+
+    return HttpResponse(
+        image_data, content_type=course_upload_file.user_upload.metadata["content_type"]
+    )
+
 
 @requires_csrf_token
 def course_students_registered(request, id):
     course = Course.objects.get(id=id)
     context = {"messages": [], "course": course}
 
-    return render(request, 'courses/tabs/register_informations.html', context=context)
-
+    return render(request, "courses/tabs/register_informations.html", context=context)

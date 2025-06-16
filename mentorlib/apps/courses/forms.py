@@ -10,4 +10,4 @@ class CourseFilterForm(StylizedForm):
 
 
 class CourseUploadForm(StylizedForm):
-    file = forms.FileField(widget=forms.FileInput, validators=[FileValidator(['pdf'])])
+    file = forms.FileField(widget=forms.FileInput, validators=[FileValidator(["pdf"])])

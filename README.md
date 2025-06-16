@@ -6,6 +6,36 @@ I decided to rewrite in Django (also I prefer Django ORM instead of Sqlalchemy :
 
 This application use tailwind & flowbite for components
 
+## Installation
+```shell
+git clone https://github.com/Z3k4/mentorlib.git
+cd mentorlib
+```
+
+## Configuration
+
+- Rename .env.example to .env
+- Edit variables
+
+To edit footbar, update config.json
+
+## Running 
+```
+docker-compose up -d
+```
+
 ## Features
+* Admin
+    * Create resources, departments, semesters
+* Courses
+    * List all courses
+    * Filter courses
+    * Comments
+    * Uploading documents
+    * Previzualising pdf
+* Mentor
+    * Accept course
+    * Create course
+    * Add notes on student
 * API
 

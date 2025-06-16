@@ -12,10 +12,16 @@ class Department(models.Model):
 class StudyYear(models.Model):
     order = models.IntegerField()
     name = models.CharField(max_length=255)
-    previous = models.ForeignKey("StudyYear", on_delete=models.CASCADE, related_name="next", null=True, blank=True)
+    previous = models.ForeignKey(
+        "StudyYear",
+        on_delete=models.CASCADE,
+        related_name="next",
+        null=True,
+        blank=True,
+    )
 
     def is_after(self, year):
-        current_year:StudyYear = self
+        current_year: StudyYear = self
         while True:
             if current_year.previous == year:
                 return True
@@ -24,7 +30,6 @@ class StudyYear(models.Model):
             else:
                 return False
 
-            
     def __str__(self):
         return self.name
 
@@ -33,19 +38,20 @@ class Semester(models.Model):
     order = models.IntegerField()
     semester = models.IntegerField()
     year = models.ForeignKey(StudyYear, on_delete=models.CASCADE)
-    previous = models.ForeignKey("Semester", on_delete=models.CASCADE, related_name="next", null=True, blank=True)
+    previous = models.ForeignKey(
+        "Semester", on_delete=models.CASCADE, related_name="next", null=True, blank=True
+    )
 
-
-    def is_after(self, year):
-        current_semester:Semester = self
+    def is_after(self, semester):
+        current_semester: Semester = self
         while True:
-            if current_semester.previous == year:
+            if current_semester.previous == semester:
                 return True
             elif current_semester.previous:
                 current_semester = current_semester.previous
             else:
                 return False
-            
+
     def __str__(self):
         return f"{self.year} - S{self.semester}"
 

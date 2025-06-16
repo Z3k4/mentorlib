@@ -1,43 +1,43 @@
 <!-- templates/index.html -->
 
 {% extends "_base.html" %} {% block content %}
-<h1 class="text-3xl">Accueil</h1>
+    <h1 class="text-3xl">Accueil</h1>
 
-{% if not courses %}
-<p class="text-center text-gray-700 dark:text-gray-400">
-	Aucun cours disponible
-</p>
-{% else %}
-{% if courses|length > 4 %}
+    {% if not courses %}
+        <p class="text-center text-gray-700 dark:text-gray-400">
+            Aucun cours disponible
+        </p>
+    {% else %}
+        {% if courses|length > 4 %}
 
-<div class="block md:flex md:px-16">
-	<div class="h-max relative overflow-hidden rounded-lg md:h-72 md:px-3">
-		<div class="grid grid-cols-4 grid-rows-1 gap-1">
-		{% for course in courses|slice:"0:4" %}
-			{% include 'partials/courses/card.html' with course=course %}
-		{% endfor %}
-		</div>
-	</div>
-</div>
+            <div class="block md:flex md:px-16">
+                <div class="h-max relative overflow-hidden rounded-lg md:h-72 md:px-3">
+                    <div class="grid grid-cols-4 grid-rows-1 gap-1">
+                        {% for course in courses|slice:"0:4" %}
+                            {% include 'partials/courses/card.html' with course=course %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
-{% else %}
-<div class="block md:flex">
-	<div class="hidden self-center mx-2 md:block">
-		<button color="light" on:click="{previous}"><AngleLeftOutline /></button>
-	</div>
-    {% include 'partials/courses/upcoming.html' with courses=courses %}
-	<div class="hidden self-center mx-2 md:block">
-		<button color="light" on:click="{next}"><AngleRightOutline /></button>
-	</div>
+        {% else %}
+            <div class="block md:flex">
+                <div class="hidden self-center mx-2 md:block">
+                    <button color="light" on:click="{previous}"><AngleLeftOutline /></button>
+                </div>
+                {% include 'partials/courses/upcoming.html' with courses=courses %}
+                <div class="hidden self-center mx-2 md:block">
+                    <button color="light" on:click="{next}"><AngleRightOutline /></button>
+                </div>
 
-	<div class="flex justify-between md:hidden">
-		<div class="self-center mx-2 md:block">
-			<button color="light" on:click="{previous}"><AngleLeftOutline /></button>
-		</div>
+                <div class="flex justify-between md:hidden">
+                    <div class="self-center mx-2 md:block">
+                        <button color="light" on:click="{previous}"><AngleLeftOutline /></button>
+                    </div>
 
-		<div class="self-center mx-2 md:block">
-			<button color="light" on:click="{next}"><AngleRightOutline /></button>
-		</div>
-	</div>
-</div>
-{% endif %} {% endif %} {% endblock content %}
+                    <div class="self-center mx-2 md:block">
+                        <button color="light" on:click="{next}"><AngleRightOutline /></button>
+                    </div>
+                </div>
+            </div>
+        {% endif %} {% endif %} {% endblock content %}

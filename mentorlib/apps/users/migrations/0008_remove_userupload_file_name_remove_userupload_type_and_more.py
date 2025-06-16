@@ -5,27 +5,50 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0007_userupload_date'),
+        ("users", "0007_userupload_date"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='userupload',
-            name='file_name',
+            model_name="userupload",
+            name="file_name",
         ),
         migrations.RemoveField(
-            model_name='userupload',
-            name='type',
+            model_name="userupload",
+            name="type",
         ),
         migrations.CreateModel(
-            name='UploadMetadata',
+            name="UploadMetadata",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(choices=[('name', 'Name'), ('type', 'Type'), ('size', 'Size'), ('pages', 'Pages')])),
-                ('value', models.CharField()),
-                ('user_upload', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.userupload')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        choices=[
+                            ("name", "Name"),
+                            ("type", "Type"),
+                            ("size", "Size"),
+                            ("pages", "Pages"),
+                        ]
+                    ),
+                ),
+                ("value", models.CharField()),
+                (
+                    "user_upload",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="users.userupload",
+                    ),
+                ),
             ],
         ),
     ]

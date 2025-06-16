@@ -1,10 +1,10 @@
 <div class="d-flex">
-<h2>Cours à venir</h2>
-<div class="h-max relative overflow-hidden rounded-lg md:h-72">
-	<div class="flex justify-between flex-col md:flex-row">
-		{% for course in courses %}
-			{% include 'partials/courses/card.html' with course=course %}
-		{% endfor %}
-	</div>
-</div>
+    <h2>Cours à venir</h2>
+    <div class="h-max relative overflow-hidden rounded-lg md:h-72">
+        <div class="flex justify-between flex-col md:flex-row">
+            {% for course in courses %}
+                {% include 'partials/courses/card.html' with course=course %}
+            {% endfor %}
+        </div>
+    </div>
 </div>

@@ -6,27 +6,49 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0004_usernote_date'),
+        ("users", "0004_usernote_date"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='user',
-            options={'permissions': [('mentoring', 'Allow mentoring for user'), ('super_mentoring', 'Allow mentoring for user even his year is under the resource')]},
+            name="user",
+            options={
+                "permissions": [
+                    ("mentoring", "Allow mentoring for user"),
+                    (
+                        "super_mentoring",
+                        "Allow mentoring for user even his year is under the resource",
+                    ),
+                ]
+            },
         ),
         migrations.CreateModel(
-            name='UserUpload',
+            name="UserUpload",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('filename', models.CharField(max_length=255)),
-                ('filepath', models.CharField()),
-                ('type', models.CharField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='uploads', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("filename", models.CharField(max_length=255)),
+                ("filepath", models.CharField()),
+                ("type", models.CharField()),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="uploads",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'permissions': [('upload_files', 'Can upload files')],
+                "permissions": [("upload_files", "Can upload files")],
             },
         ),
     ]

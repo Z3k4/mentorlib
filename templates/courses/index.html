@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% block content %}
-<h1 class="text-3xl">Cours</h1>
-{% include 'partials/core/filters.html' with filtered=courses filter_form=filter_form %}
+    <h1 class="text-3xl">Cours</h1>
+    {% include 'partials/core/filters.html' with filtered=courses filter_form=filter_form %}
 <!-- <form class="max-w-md mx-auto">   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Chercher</label>
     <div class="relative">
@@ -15,8 +15,8 @@
     </div>
 </form> -->
 
-{% for course in courses.qs %}
-    {% include 'partials/courses/item.html' with course=course %}
-{% endfor %}
+    {% for course in courses.qs %}
+        {% include 'partials/courses/item.html' with course=course %}
+    {% endfor %}
 
 {% endblock content %}

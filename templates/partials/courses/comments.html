@@ -1,26 +1,26 @@
-<div>
-    {% if course.is_available %}
-        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Commentaire</label>
-    {% else %}
-        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message</label>
-    {% endif %}
-    <textarea name="message" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="J'aurais une question.."></textarea>
-    <button pe="submit" class="mt-2 w-full1 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Commenter</button>
-    <div class="">
-        {% if course.comments|length > 0 %}
-            {% for comment in course.comments %}
-                
+
+{% if course.is_available %}
+    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Commentaire</label>
+{% else %}
+    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message</label>
+{% endif %}
+<textarea name="message" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="J'aurais une question.."></textarea>
+<button pe="submit" class="mt-2 w-full1 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Commenter</button>
+<div class="">
+    {% if course.comments|length > 0 %}
+        {% for comment in course.comments %}
+
             <div class="flex items-start gap-2.5 w-full mt-2">
                 <UserAvatar student={comment.user} />
                 <div class="flex flex-col w-full leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                    {% if comment.user == request.user %}
-                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">{$t("mentor")}</span>
-                    {% endif %}
-                    <span class="text-sm font-semibold text-gray-900 dark:text-white">{comment.user.lastname} {comment.user.firstname}</span>
-                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{formatDate(comment.date)}</span>
-                </div>
-                <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{comment.comment}</p>
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        {% if comment.user == request.user %}
+                            <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">{$t("mentor")}</span>
+                        {% endif %}
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">{comment.user.lastname} {comment.user.firstname}</span>
+                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{formatDate(comment.date)}</span>
+                    </div>
+                    <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{comment.comment}</p>
                 </div>
                 {% if comment.user == request.user or request.user.is_super %}
                     <Button class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600">
@@ -33,15 +33,14 @@
                     </Dropdown>
                 {% endif %}
             </div>
-            {% endfor %}
-        {% else %}
-            <p class="text-center m-auto">
-                {% if course.is_available %}
-                    <span class="text-base text-gray-500 truncate dark:text-gray-400">Aucuns commentaires</span>
-                {% else %}
-                    <span class="text-base text-gray-500 truncate dark:text-gray-400">Aucuns messages</span>
-                {% endif %}
-            </p>
-        {% endif %}
-    </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center m-auto">
+            {% if course.is_available %}
+                <span class="text-base text-gray-500 truncate dark:text-gray-400">Aucuns commentaires</span>
+            {% else %}
+                <span class="text-base text-gray-500 truncate dark:text-gray-400">Aucuns messages</span>
+            {% endif %}
+        </p>
+    {% endif %}
 </div>
