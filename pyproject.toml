@@ -22,6 +22,7 @@ isort = "^5.12"
 flake8 = "^7.0"
 pytest = "^8.0"
 pytest-django = "^4.8"
+djhtml = "^3.0.8"
 
 [build-system]
 requires = ["poetry-core"]

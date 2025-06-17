@@ -16,17 +16,26 @@ from django.http import HttpResponse
 from mentorlib.settings import BASE_DIR
 from pathlib import Path
 
+NAV_URLS = {
+    "course_nav": {
+        "Informations":"courses:course_details",
+        "Etudiant inscrits":"courses:course_students_registered",
+        "Documents":"courses:course_files"
+    },
+}
+CONTEXT = { **NAV_URLS, 'messages':[]}
 
 def index(request):
-    context = {}
-    context["courses"] = CourseFilter(request.GET, queryset=Course.objects.all())
-    context["filter_form"] = CourseFilterForm()
-    return render(request, "courses/index.html", context=context)
+    CONTEXT["courses"] = CourseFilter(request.GET, queryset=Course.objects.all())
+    CONTEXT["filter_form"] = CourseFilterForm()
+    return render(request, "courses/index.html", context=CONTEXT)
 
 
 def course_details(request, id):
     course = Course.objects.get(id=id)
-    context = {"messages": [], "course": course, "file_upload": CourseUploadForm()}
+    CONTEXT['course'] = course
+    CONTEXT['file_upload'] = CourseUploadForm()
+
     action = request.GET.get("action")
 
     if action:
@@ -36,11 +45,11 @@ def course_details(request, id):
         if action == "unsuscribe":
             if course_registered:
                 course_registered.delete()
-                context["messages"].append(
+                CONTEXT["messages"].append(
                     {"color": "red", "text": "Vous vous êtes désinscrit"}
                 )
             else:
-                context["messages"].append(
+                CONTEXT["messages"].append(
                     {"color": "red", "text": "Vous n'êtes pas inscrit"}
                 )
         elif action == "suscribe" and not course_registered:
@@ -48,7 +57,7 @@ def course_details(request, id):
                 student=request.user, course=course
             )
             course_registered.save()
-            context["messages"].append(
+            CONTEXT["messages"].append(
                 {
                     "color": "green",
                     "text": "Votre inscription a bien été prit en compte",
@@ -62,7 +71,7 @@ def course_details(request, id):
         course_registered.note = request.POST.get("student_note")
         course_registered.save()
 
-    return render(request, "courses/tabs/informations.html", context=context)
+    return render(request, "courses/tabs/informations.html", context=CONTEXT)
 
 
 def duration_to_minutes(duration: str):
@@ -123,11 +132,13 @@ def course_ask(request):
 @requires_csrf_token
 def course_files(request, id):
     course = Course.objects.get(id=id)
-    context = {"form": CourseUploadForm(), "course": course}
+    CONTEXT["form"] = CourseUploadForm()
+    CONTEXT["course"] = course
+
     if request.method == "POST":
         handle_course_files(course, request.user, request.FILES["file"])
 
-    return render(request, "courses/tabs/documents.html", context=context)
+    return render(request, "courses/tabs/documents.html", context=CONTEXT)
 
 
 def course_views_file(request, id, file_id):
@@ -145,6 +156,6 @@ def course_views_file(request, id, file_id):
 @requires_csrf_token
 def course_students_registered(request, id):
     course = Course.objects.get(id=id)
-    context = {"messages": [], "course": course}
+    CONTEXT["course"] = course
 
-    return render(request, "courses/tabs/register_informations.html", context=context)
+    return render(request, "courses/tabs/register_informations.html", context=CONTEXT)
