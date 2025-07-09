@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="col-span-2">
-            {% if course|student_is_registered:request.user or course.mentor == request.user %}
+            {% if not request.user.is_anonymous and course|student_is_registered:request.user or course.mentor == request.user %}
                 {% include 'partials/courses/comments.html' with course=course %}
             {% endif %}
         </div>

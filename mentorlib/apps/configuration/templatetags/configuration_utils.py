@@ -1,5 +1,6 @@
 from django import template
-import locale
+
+# import locale
 from pathlib import Path
 from mentorlib.settings import BASE_DIR
 
@@ -8,7 +9,7 @@ register = template.Library()
 
 @register.filter
 def format_date_to_local(date, local="fr_FR"):
-    locale.setlocale(locale.LC_TIME, local)
+    # locale.setlocale(locale.LC_TIME, local)
     return date.strftime("%A %d %b %H:%M").capitalize()
 
 

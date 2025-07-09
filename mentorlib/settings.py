@@ -32,6 +32,7 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -80,14 +81,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "mentorlib.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "mentorlib",
+        "USER": "mentorlib",
+        "PASSWORD": "mentorlib",
+        "HOST": "db",
+        "PORT": "5432",
     }
 }
 
@@ -157,3 +161,13 @@ REST_FRAMEWORK = {
 
 TEMPLATE_DIRS = (BASE_DIR / "templates",)
 FORM_RENDER = "django.forms.renderers.TemplatesSetting"
+ASGI_APPLICATION = "mentorlib.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
+}

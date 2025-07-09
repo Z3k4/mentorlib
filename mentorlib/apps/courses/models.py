@@ -43,19 +43,23 @@ class CourseRegisteredStudent(models.Model):
     note = models.TextField(blank=True)
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="comments"
     )
     comment = models.CharField(max_length=255)
-    date = models.DateTimeField(default=datetime.now)
+    date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
 
     class Meta:
         permissions = [
-            ("delete_comment", "Allow user to delete comment on course"),
             ("change_status", "Allow user to lock / cancel course"),
         ]
+
+        ordering = ["-date"]
+
+    def __str__(self):
+        return f"{self.user.username}:{self.comment[:30]}"
 
 
 class CourseUploadFile(models.Model):
