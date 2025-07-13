@@ -133,8 +133,9 @@
 
     document.querySelector('#sendBtn').onclick = function(e) {
         const message = document.querySelector("textarea#message").value
-
         chatSocket.socket.send(JSON.stringify({'message':message, 'course':'{{course.id}}'}))
+
+        document.querySelector("textarea#message").value = ""
     }
 
 
