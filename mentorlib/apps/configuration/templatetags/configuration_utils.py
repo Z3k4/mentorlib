@@ -52,5 +52,4 @@ def get_active(url: str, args: str):
     path = arg_list[0]
     class_name = arg_list[1]
     default_class_name = arg_list[2]
-    print(path, url)
     return class_name if url == path else default_class_name

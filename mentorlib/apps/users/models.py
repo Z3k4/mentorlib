@@ -24,6 +24,10 @@ class User(AbstractUser):
             ),
         ]
 
+    @property
+    def notifications(self):
+        return Notification.objects.filter(user=self, readed=False)
+
     def get_full_name(self):
         return f"{(self.last_name or 'Unknown')} {(self.first_name or 'Unknown')}"
 
@@ -82,3 +86,23 @@ class UserUpload(models.Model):
 
     def __str__(self):
         return f"{self.file_path}"
+
+
+class NotificationType(models.Model):
+    short_name = models.CharField(max_length=100, unique=True, default="")
+    text = models.CharField(max_length=255)
+    link = models.CharField()
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        NotificationType, on_delete=models.CASCADE, related_name="notifications"
+    )
+    readed = models.BooleanField(default=False)
+    date = models.DateTimeField(default=datetime.now)
+    variables = models.JSONField()
+
+    @property
+    def text(self):
+        return self.type.text % self.variables

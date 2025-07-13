@@ -5,14 +5,19 @@ from mentorlib.apps.configuration.templatetags.configuration_utils import (
 )
 from mentorlib.apps.courses.models import Comment, Course
 from channels.db import database_sync_to_async
+from mentorlib.apps.users.utils import notify_users_related_to_course
+from mentorlib.apps.users.models import NotificationType
 
 
 @database_sync_to_async
 def create_comment(course_id, message, user):
-    comment = Comment(
-        course=Course.objects.get(id=course_id), comment=message, user=user
-    )
+    course = Course.objects.get(id=course_id)
+    comment = Comment(course=course, comment=message, user=user)
     comment.save()
+
+    notification_type = NotificationType.objects.get(short_name="course_comment")
+    variables = {"comment": message}
+    notify_users_related_to_course(course, notification_type, variables)
 
     return comment
 

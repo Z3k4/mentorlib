@@ -18,6 +18,7 @@ from mentorlib.core.utilities.file import handle_course_files
 from django.http import HttpResponse
 from mentorlib.settings import BASE_DIR
 from pathlib import Path
+from mentorlib.apps.users.utils import notify
 
 NAV_URLS = {
     "course_nav": {
@@ -32,6 +33,10 @@ CONTEXT = {**NAV_URLS, "messages": []}
 def index(request):
     CONTEXT["courses"] = CourseFilter(request.GET, queryset=Course.objects.all())
     CONTEXT["filter_form"] = CourseFilterForm()
+
+    for user in User.objects.all():
+        notify(user)
+
     return render(request, "courses/index.html", context=CONTEXT)
 
 

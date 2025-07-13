@@ -5,7 +5,7 @@
         class="p-8 bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-800"
     >
         <div class="mb-1 flex justify-between">
-            <label for="message">Type</label>
+            <label for="message" class="text-base font-medium text-gray-900 truncate dark:text-white">Type</label>
             <div class="relative">
                 {% if course.remote %}
                     <span
@@ -21,9 +21,9 @@
             </div>
         </div>
         <div class="mb-1 flex justify-between">
-            <label for="message">Date</label>
+            <label for="message" class="text-base font-medium text-gray-900 truncate dark:text-white">Date</label>
             <div class="relative">
-                <span>{{course.date|format_date_to_local}}</span>
+                <span class="text-base font-medium text-gray-900 truncate dark:text-white">{{course.date|format_date_to_local}}</span>
             </div>
         </div>
         <div>

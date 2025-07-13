@@ -18,10 +18,13 @@
     {% if course.comments.select_related|length > 0 %}
         {% for comment in course.comments.select_related %}
             <div class="flex items-start gap-2.5 w-full mt-2">
+                {% include 'partials/users/avatar.html' with user=comment.user %}
                 <div class="flex flex-col w-full leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                     <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                        {% if comment.user == request.user %}
+                        {%if comment.user == course.mentor %}
                             <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Mentor</span>
+                        {% endif %}
+                        {% if comment.user == request.user %}
                             <span class="text-sm font-semibold text-gray-900 dark:text-white">Vous</span>
                         {% else %}
                             <span class="text-sm font-semibold text-gray-900 dark:text-white">{{comment.user.last_name}} {{comment.user.first_name}}</span>
@@ -82,19 +85,34 @@
     {% endif %}
 </div>
 
-<script src="{% static 'src/js/chat.js' %}"></script>
-<script>
-    const user_id = {{request.user.id}}
+<script type="module">
+    import {getInitialLetter} from "{% static 'src/js/utils.js' %}"
+    import {Socket} from "{% static 'src/js/socket.js' %}"
 
+    const user_id = '{{request.user.id}}'
+    const mentor_id = '{{course.mentor.id}}'
     function createComment(user, comment){
         let name = `${user.last_name} ${user.first_name}`
-        if(user.id == user_id) {
+        if(user.id == +user_id) {
             name = "Vous"
         }
         let contentHTML = `
         <div class="flex items-start gap-2.5 w-full mt-2">
+            <div class="flex-shrink-0">
+            <div
+                class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
+            >
+                <span class="font-medium text-gray-600 dark:text-gray-300"
+                >${getInitialLetter(user)}</span
+                    >
+                </div>
+            </div>
             <div class="flex flex-col w-full leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">`
+        if (user.id == +mentor_id) {
+            contentHTML += `<span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Mentor</span>`
+        }
+        contentHTML += `
                     <span class="text-sm font-semibold text-gray-900 dark:text-white">${name}</span>
                     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">${comment.date}</span>
                 </div>
@@ -106,8 +124,8 @@
         $("#comment-container").prepend(contentHTML)
     }
 
-    const chatSocket = new ChatSocket();
-    chatSocket.init('courses_{{course.id}}')
+    const chatSocket = new Socket();
+    chatSocket.init('courses_{{course.id}}', '/ws/chat/')
     chatSocket.socket.onmessage = function(e) {
         const data = JSON.parse(e.data).message
         createComment(data.user, data.message)

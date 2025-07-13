@@ -1,12 +1,12 @@
-class ChatSocket {
+class Socket {
     templateChatHTML = ""
     parent = document.querySelector("body")
-    init(roomName) {
+    init(roomName, link) {
         this.roomName = roomName
         this.socket = new WebSocket(
             'ws://'
             + window.location.host
-            + '/ws/chat/'
+            + link
             + roomName
             + '/'
         )
@@ -21,3 +21,5 @@ class ChatSocket {
         this.templateChatHTML = this.templateChatHTML
     }
 }
+
+export {Socket}

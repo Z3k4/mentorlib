@@ -16,7 +16,6 @@ dependencies = [
     "filetype>=1.2.0",
     "psycopg2-binary>=2.9.10",
     "pypdf2>=3.0.1",
-    "ruff>=0.12.2",
 ]
 
 [dependency-groups]
@@ -24,4 +23,5 @@ dev = [
     "djhtml>=3.0.8",
     "pytest>=8.0",
     "pytest-django>=4.8",
+    "ruff>=0.12.2",
 ]

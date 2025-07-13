@@ -1,0 +1,7 @@
+nodes_modules/*
+nodes_modules
+package.json
+.venv/
+.prettierrc
+.gitignore
+.ruff_cache
