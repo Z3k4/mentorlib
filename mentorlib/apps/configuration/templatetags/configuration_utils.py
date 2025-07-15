@@ -32,7 +32,7 @@ def get_filter_template(filter):
 
 @register.filter
 def get_attr(value, attr):
-    return value.getlist(attr, [])
+    return value.get(attr, None)
 
 
 @register.filter

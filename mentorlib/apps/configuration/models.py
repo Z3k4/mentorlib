@@ -10,7 +10,6 @@ class Department(models.Model):
 
 
 class StudyYear(models.Model):
-    order = models.IntegerField()
     name = models.CharField(max_length=255)
     previous = models.ForeignKey(
         "StudyYear",
@@ -35,7 +34,6 @@ class StudyYear(models.Model):
 
 
 class Semester(models.Model):
-    order = models.IntegerField()
     semester = models.IntegerField()
     year = models.ForeignKey(StudyYear, on_delete=models.CASCADE)
     previous = models.ForeignKey(

@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import requires_csrf_token
 from mentorlib.apps.users.models import User, UserNote
 from mentorlib.apps.configuration.models import Resource
-# Create your views here.
+from mentorlib.apps.users.forms import UserSettingsForm
+from django.contrib.auth.hashers import check_password, make_password
 
 
 def logout_view(request):
@@ -61,6 +62,37 @@ def register_view(request):
 def profile_view(request, id):
     context = {"user": User.objects.get(id=id), "resources": Resource.objects.all()}
     return render(request, "users/profile.html", context=context)
+
+
+@requires_csrf_token
+def settings_view(request):
+    context = {
+        "form": UserSettingsForm(
+            initial={
+                "last_name": request.user.last_name,
+                "first_name": request.user.first_name,
+            }
+        )
+    }
+
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+
+        if request.POST["current_password"]:
+            if request.POST["password"] and check_password(
+                request.POST["current_password"], user.password
+            ):
+                user.password = make_password(request.POST["password"])
+
+        if request.POST["last_name"]:
+            user.last_name = request.POST["last_name"]
+
+        if request.POST["first_name"]:
+            user.first_name = request.POST["first_name"]
+
+        user.save()
+
+    return render(request, "users/settings.html", context=context)
 
 
 @requires_csrf_token

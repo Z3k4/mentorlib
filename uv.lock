@@ -326,7 +326,6 @@ dependencies = [
     { name = "filetype" },
     { name = "psycopg2-binary" },
     { name = "pypdf2" },
-    { name = "ruff" },
 ]
 
 [package.dev-dependencies]
@@ -334,6 +333,7 @@ dev = [
     { name = "djhtml" },
     { name = "pytest" },
     { name = "pytest-django" },
+    { name = "ruff" },
 ]
 
 [package.metadata]
@@ -348,7 +348,6 @@ requires-dist = [
     { name = "filetype", specifier = ">=1.2.0" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
     { name = "pypdf2", specifier = ">=3.0.1" },
-    { name = "ruff", specifier = ">=0.12.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -356,6 +355,7 @@ dev = [
     { name = "djhtml", specifier = ">=3.0.8" },
     { name = "pytest", specifier = ">=8.0" },
     { name = "pytest-django", specifier = ">=4.8" },
+    { name = "ruff", specifier = ">=0.12.2" },
 ]
 
 [[package]]
