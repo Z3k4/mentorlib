@@ -10,6 +10,19 @@ from mentorlib.apps.users.models import NotificationType
 
 
 @database_sync_to_async
+def delete_comment(user, id):
+    """
+    Delete course comment and return True if it was deleted
+    """
+    comment = Comment.objects.get(id=id)
+    if comment.user == user:
+        comment.delete()
+        return True
+
+    return False
+
+
+@database_sync_to_async
 def create_comment(course_id, message, user):
     course = Course.objects.get(id=course_id)
     comment = Comment(course=course, comment=message, user=user)
@@ -39,32 +52,50 @@ class CommentConsumer(AsyncWebsocketConsumer):
     # Receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
-        user = self.scope["user"]
-        course_id = text_data_json["course"]
+        if "action" in text_data_json:
+            if text_data_json["action"] == "delete":
+                deleted = await delete_comment(
+                    self.scope["user"], text_data_json["comment_id"]
+                )
+                if deleted:
+                    await self.channel_layer.group_send(
+                        self.room_group_name,
+                        {
+                            "type": "chat.message",
+                            "message": {
+                                "action": "delete_comment",
+                                "comment_id": text_data_json["comment_id"],
+                            },
+                        },
+                    )
+        else:
+            message = text_data_json["message"]
+            user = self.scope["user"]
+            course_id = text_data_json["course"]
 
-        if user:
-            comment = await create_comment(course_id, message, user)
-            user_json = {
-                "username": user.username,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "id": user.id,
-            }
-            # Send message to room group
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    "type": "chat.message",
-                    "message": {
-                        "user": user_json,
+            if user:
+                comment = await create_comment(course_id, message, user)
+                user_json = {
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "id": user.id,
+                }
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        "type": "chat.message",
                         "message": {
-                            "text": message,
-                            "date": format_date_to_local(comment.date),
+                            "action": "new_comment",
+                            "user": user_json,
+                            "message": {
+                                "text": message,
+                                "date": format_date_to_local(comment.date),
+                                "id": comment.id,
+                            },
                         },
                     },
-                },
-            )
+                )
 
     # Receive message from room group
     async def chat_message(self, event):

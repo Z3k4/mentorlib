@@ -1,6 +1,6 @@
 
 function renderFileContainerInformation(name, size, type) {
-    return ` <div class="flex items-start my-2.5 bg-gray-50 dark:bg-gray-600 rounded-xl p-2">
+    return `<div class="flex items-start my-2.5 bg-gray-50 dark:bg-gray-600 rounded-xl p-2">
         <div class="me-2">
             <span class="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white pb-2">
                 <svg fill="none" aria-hidden="true" class="w-5 h-5 shrink-0" viewBox="0 0 20 21">
@@ -41,6 +41,7 @@ function renderFileContainerInformation(name, size, type) {
             </button>
         </div>
         </div>
+        
         `
 }
 
