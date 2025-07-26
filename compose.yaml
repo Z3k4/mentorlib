@@ -3,6 +3,7 @@ services:
     build: .
     ports:
       - "8000:8000"
+    container_name: web
 
     stdin_open: true
     tty: true
@@ -23,6 +24,8 @@ services:
         # Rebuild the image if dependencies change by checking uv.lock
         - action: rebuild
           path: ./uv.lock
+    depends_on:
+      - db
   db:
     image: postgres:15
     volumes:
