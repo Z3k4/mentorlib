@@ -1,0 +1,1 @@
+[{"model": "users.notificationtype", "pk": 2, "fields": {"short_name": "course_comment", "text": "Nouveau commentaire %(comment)s", "link": "course"}}]

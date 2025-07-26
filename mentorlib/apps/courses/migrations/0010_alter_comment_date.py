@@ -4,14 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
-        ("courses", "0009_rename_comments_comment_alter_comment_options"),
+        ('courses', '0009_rename_comments_comment_alter_comment_options'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="comment",
-            name="date",
+            model_name='comment',
+            name='date',
             field=models.DateTimeField(auto_now_add=True),
         ),
     ]

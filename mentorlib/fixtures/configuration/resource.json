@@ -1,0 +1,1 @@
+[{"model": "configuration.resource", "pk": 1, "fields": {"number": 1, "name": "Base de données", "description": "test", "semester": 1, "department": 1, "banner": null}}, {"model": "configuration.resource", "pk": 2, "fields": {"number": 2, "name": "Maths discrètes", "description": "test", "semester": 1, "department": 1, "banner": null}}]

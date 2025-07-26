@@ -19,9 +19,21 @@ cd mentorlib
 
 To edit footbar, update config.json
 
+Load fixtures
+```
+python manage.py loaddata $(find mentorlib/fixtures -type f -name '*.json')
+```
+
 ## Running 
 ```
 docker-compose up -d
+```
+
+## Debug
+
+If you want to close all connections (for example to use reset_db)
+```
+select pg_terminate_backend(pid) from pg_stat_activity where datname = 'mentorlib';
 ```
 
 ## Features

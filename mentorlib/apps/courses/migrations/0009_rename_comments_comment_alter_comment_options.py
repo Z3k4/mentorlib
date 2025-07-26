@@ -5,20 +5,19 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
+
     dependencies = [
-        ("courses", "0008_alter_askedcourse_approved_date"),
+        ('courses', '0008_alter_askedcourse_approved_date'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name="Comments",
-            new_name="Comment",
+            old_name='Comments',
+            new_name='Comment',
         ),
         migrations.AlterModelOptions(
-            name="comment",
-            options={
-                "permissions": [("change_status", "Allow user to lock / cancel course")]
-            },
+            name='comment',
+            options={'permissions': [('change_status', 'Allow user to lock / cancel course')]},
         ),
     ]
