@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('configuration', '0004_semester_previous_studyyear_previous'),
+        ("configuration", "0004_semester_previous_studyyear_previous"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='semester',
-            name='order',
+            model_name="semester",
+            name="order",
         ),
         migrations.RemoveField(
-            model_name='studyyear',
-            name='order',
+            model_name="studyyear",
+            name="order",
         ),
     ]

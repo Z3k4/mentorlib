@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from mentorlib.apps.configuration.models import Resource, Semester, StudyYear
 from datetime import datetime
+from pathlib import Path
+from mentorlib.settings import UPLOADS_DIR, BASE_DIR
 
 
 class User(AbstractUser):
@@ -83,6 +85,16 @@ class UserUpload(models.Model):
             meta.name: meta.value
             for meta in UploadMetadata.objects.filter(user_upload=self)
         }
+
+    @property
+    def absolute_path(self):
+        return Path(BASE_DIR) / UPLOADS_DIR / self.file_path
+
+    def erase(self):
+        file = Path(self.absolute_path)
+
+        if file.exists():
+            file.unlink()
 
     def __str__(self):
         return f"{self.file_path}"

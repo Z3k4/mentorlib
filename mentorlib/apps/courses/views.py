@@ -16,8 +16,6 @@ from mentorlib.apps.courses.filters import CourseFilter
 from mentorlib.apps.courses.forms import CourseFilterForm, CourseUploadForm
 from mentorlib.core.utilities.file import handle_course_files
 from django.http import HttpResponse
-from mentorlib.settings import BASE_DIR
-from pathlib import Path
 from mentorlib.apps.users.utils import notify
 
 NAV_URLS = {
@@ -145,8 +143,21 @@ def course_files(request, id):
     CONTEXT["form"] = CourseUploadForm()
     CONTEXT["course"] = course
 
+    action = request.GET.get("action")
+
     if request.method == "POST":
         handle_course_files(course, request.user, request.FILES["file"])
+
+    if request.user.is_authenticated:
+        if request.method == "GET" and action:
+            document = CourseUploadFile.objects.get(id=request.GET["document"])
+
+            if (
+                document.user_upload.user == request.user
+                or course.mentor == request.user
+            ):
+                document.erase()
+                document.delete()
 
     return render(request, "courses/tabs/documents.html", context=CONTEXT)
 
@@ -155,7 +166,7 @@ def course_views_file(request, id, file_id):
     course_upload_file = CourseUploadFile.objects.get(
         course=Course.objects.get(id=id), user_upload=UserUpload.objects.get(id=file_id)
     )
-    path = Path(BASE_DIR) / course_upload_file.user_upload.file_path
+    path = course_upload_file.user_upload.absolute_path
     image_data = open(path, "rb").read()
 
     return HttpResponse(

@@ -72,3 +72,6 @@ class CourseUploadFile(models.Model):
     @property
     def url(self):
         return f"{reverse('courses:course_view_files', kwargs={'id': self.course.id, 'file_id': self.user_upload.id})}"
+
+    def erase(self):
+        self.user_upload.erase()

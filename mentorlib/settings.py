@@ -171,3 +171,5 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+UPLOADS_DIR = "uploads/"

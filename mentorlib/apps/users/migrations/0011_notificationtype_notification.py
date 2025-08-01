@@ -7,30 +7,61 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0010_user_semester_user_study_year'),
+        ("users", "0010_user_semester_user_study_year"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='NotificationType',
+            name="NotificationType",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('short_name', models.CharField(default='', max_length=100, unique=True)),
-                ('text', models.CharField(max_length=255)),
-                ('link', models.CharField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "short_name",
+                    models.CharField(default="", max_length=100, unique=True),
+                ),
+                ("text", models.CharField(max_length=255)),
+                ("link", models.CharField()),
             ],
         ),
         migrations.CreateModel(
-            name='Notification',
+            name="Notification",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('readed', models.BooleanField(default=False)),
-                ('date', models.DateTimeField(default=datetime.datetime.now)),
-                ('variables', models.JSONField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='notifications', to='users.notificationtype')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("readed", models.BooleanField(default=False)),
+                ("date", models.DateTimeField(default=datetime.datetime.now)),
+                ("variables", models.JSONField()),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "type",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="notifications",
+                        to="users.notificationtype",
+                    ),
+                ),
             ],
         ),
     ]

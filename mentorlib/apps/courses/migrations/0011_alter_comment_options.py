@@ -4,14 +4,18 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('courses', '0010_alter_comment_date'),
+        ("courses", "0010_alter_comment_date"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='comment',
-            options={'ordering': ['-date'], 'permissions': [('change_status', 'Allow user to lock / cancel course')]},
+            name="comment",
+            options={
+                "ordering": ["-date"],
+                "permissions": [
+                    ("change_status", "Allow user to lock / cancel course")
+                ],
+            },
         ),
     ]

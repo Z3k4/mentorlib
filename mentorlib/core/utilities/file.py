@@ -6,6 +6,7 @@ import uuid
 import filetype
 from django.core.exceptions import PermissionDenied
 import PyPDF2
+from mentorlib.settings import UPLOADS_DIR
 
 
 def get_file_extension(file):
@@ -45,21 +46,22 @@ def handle_files(user: User, file) -> UserUpload:
     if not user.has_perm("userupload.upload_files"):
         raise PermissionDenied(f"{user} cannot upload files")
 
-    path = Path(f"uploads/users/{user.id}")
-
     random_uuid = str(uuid.uuid4())
     extension = get_file_extension(file)
-    file_path = path / f"{random_uuid}.{extension}"
+    path = Path(f"users/{user.id}") / f"{random_uuid}.{extension}"
 
-    if not path.exists():
-        path.mkdir(exist_ok=True, parents=True)
+    absolute_path = Path(BASE_DIR) / UPLOADS_DIR
+    file_path = absolute_path / path
 
-    with open(BASE_DIR / file_path, "wb+") as destination:
+    if not absolute_path.exists():
+        absolute_path.mkdir(exist_ok=True, parents=True)
+
+    with open(file_path, "wb+") as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
     user_upload = UserUpload(
-        file_path=file_path,
+        file_path=path,
         user=user,
     )
 
