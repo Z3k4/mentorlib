@@ -1,0 +1,9 @@
+{% extends 'spaces/mentor.html' %}
+
+{% block mentor_block %}
+    <div class="grid grid-cols-4 gap-1 mt-1">
+        {% for course_mentored in courses_mentored %}
+            {% include 'partials/courses/card.html' with course=course_mentored %}
+        {% endfor %}
+    </div>
+{% endblock mentor_block %}

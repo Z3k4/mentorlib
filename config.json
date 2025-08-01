@@ -1,0 +1,60 @@
+{
+    "logo_path": "/",
+    "app_link": "http://127.0.0.1",
+    "icon_path": "",
+    "app_name": "Mentorlib",
+    "copyright": "",
+    "admin_mail": "",
+    "links": [
+        {
+            "icon": "",
+            "link": ""
+        }
+    ],
+    "categories": [
+        {
+            "title": "Resources",
+            "items": [
+                {
+                    "name": "Test",
+                    "link": ""
+                }
+            ]
+        },
+        {
+            "title": "Follow us",
+            "items": [
+                {
+                    "name": "Github",
+                    "link": ""
+                },
+                {
+                    "name": "Discord",
+                    "link": ""
+                }
+            ]
+        },
+        {
+            "title": "Legal",
+            "items": [
+                {
+                    "name": "Privacy Policy",
+                    "link": ""
+                },
+                {
+                    "name": "Terms & Conditions",
+                    "link": ""
+                }
+            ]
+        }
+    ],
+    "social_networks": {
+        "github": "https://github.com/",
+        "facebook": "https://www.facebook.com/",
+        "discord": "",
+        "instagram": "https://www.instagram.com/",
+        "twitter": "https://twitter.com/",
+        "youtube": "https://www.youtube.com/channel/",
+        "linkedin": ""
+    }
+}

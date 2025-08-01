@@ -1,0 +1,37 @@
+<label
+    for="first_name"
+    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+>{{filter_name}}</label
+    >
+
+    <div class="flex gap-1">
+        {% for param in params %}
+            <div class="relative">
+                <select name={{filter_name}} id="{{filter_name}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    {% for qs in filter.queryset %}
+                        {% if qs.id|stringformat:"i"  == param %}
+                            <option value="{{qs.id}}" selected>{{qs}}</option>
+                        {% else %}
+                            <option value="{{qs.id}}">{{qs}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <div class="absolute top-0 right-0">
+                    <button type="button" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-0.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                        <svg class="w-[13px] h-[13px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                        </svg>
+                        <span class="sr-only">Icon description</span>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+
+        <button type="button" onclick="addFilter(this)" class="text-white end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
+
+        <script>
+            function addFilter(self) {
+
+            }
+        </script>
+    </div>

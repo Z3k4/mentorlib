@@ -1,0 +1,93 @@
+{% load users_utils %}
+{% load courses_utils %}
+{% with self_registered=course|get_user_course_registered:request.user %}
+    {% if self_registered %}
+        <form method="POST">
+            {% csrf_token %}
+            <div
+                class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+            >
+                <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                    <label for="student_note" class="sr-only">Indications</label>
+                    <textarea
+                        name="student_note"
+                        id="student_note"
+                        rows="4"
+                        class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                        placeholder="Ajouter des indications / préférences"
+                    >{{self_registered.note}}</textarea>
+                </div>
+                <div
+                    class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600 border-gray-200"
+                >
+                    <button
+                        type="submit"
+                        class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+                    >
+                        Editer
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    {% else %}
+        {% for course_registered in course.registered_students.all %}
+
+            <div class="flex items-start gap-2.5">
+                {% include 'partials/users/avatar.html' with user=course_registered.student %}
+                <div
+                    class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700"
+                >
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white"
+                        >{{course_registered.student|get_fullname}}</span
+                            >
+                        </div>
+                        {% if course_registered.note %}
+                            <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
+                                {{course_registered.note}}
+                            </p>
+                        {% else %}
+                            <span class="italic text-sm font-normal py-2.5 text-gray-600 dark:text-white">Pas d'indications particulières</span>
+                        {% endif %}
+                    </div>
+                    <button
+                        id="dropdownMenuIconButton"
+                        data-dropdown-toggle="userNote{{user_note.id}}"
+                        data-dropdown-placement="bottom-start"
+                        class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600"
+                        type="button"
+                    >
+                        <svg
+                            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 4 15"
+                        >
+                            <path
+                                d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+                            />
+                        </svg>
+                    </button>
+                    <div
+                        id="userNote{{user_note.id}}"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-40 dark:bg-gray-700 dark:divide-gray-600"
+                    >
+                        <ul
+                            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownMenuIconButton"
+                        >
+                            <li>
+                                <a
+                                    href=""
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >Modifier</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}

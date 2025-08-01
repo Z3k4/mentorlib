@@ -1,0 +1,10 @@
+{% load courses_utils %}
+{% if resource %}
+    <div class="h-32 w-full items-center justify-center flex bg-gray-900 dark:bg-gray-200">
+        {% if resource.banner %}
+            <img class="rounded-t-lgh-32 w-full h-full" src={resource.banner} alt="" />
+        {% else %}
+            <span class="text-4xl text-gray-200 dark:text-gray-800">{{resource|get_resource_name}}</span>
+        {% endif %}
+    </div>
+{% endif %}

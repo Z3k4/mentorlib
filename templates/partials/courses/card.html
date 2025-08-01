@@ -1,0 +1,36 @@
+{% load configuration_utils %}
+{% with id_str=course.id|stringformat:"s" %}
+    {% with default_url='/courses/'|add:id_str %}
+
+        <div
+            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
+        >
+            <a href="{{link|default:default_url}}">
+                {% include 'partials/resources/banner.html' with resource=course.resource %}
+                <div class="p-2">
+                    <span
+                        class="text-base font-bold tracking-tight text-gray-900 dark:text-white text-center"
+                    >{{course.resource.name}}</span
+                        >
+                        {% if course.mentor %}
+                            <div class="mt-2">
+                                {% include 'partials/users/user.html' with user=course.mentor lower_size='lower' %}
+                                <p
+                                    class="mb-1 text-xs font-normal text-gray-700 dark:text-gray-400 mt-1 text-center"
+                                >
+                                    {{course.date|format_date_to_local}}
+                                </p>
+                            </div>
+
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% block card_actions %}
+                        {% endblock card_actions %}
+                    </div>
+                </a>
+            </div>
+
+
+    {% endwith %}
+{% endwith %}

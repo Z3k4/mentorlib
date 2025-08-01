@@ -1,0 +1,27 @@
+[project]
+name = "mentorlib"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [{"name"="MeZKay"}]
+requires-python = ">=3.12"
+dependencies = [
+    "channels-redis>=4.2.1",
+    "channels[daphne]>=4.2.2",
+    "django>=5.0",
+    "django-compressor>=4.5.1",
+    "django-extensions>=4.1",
+    "django-filter>=25.1",
+    "djangorestframework>=3.16",
+    "filetype>=1.2.0",
+    "psycopg2-binary>=2.9.10",
+    "pypdf2>=3.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "djhtml>=3.0.8",
+    "pytest>=8.0",
+    "pytest-django>=4.8",
+    "ruff>=0.12.2",
+]

@@ -1,0 +1,1 @@
+[{"model": "configuration.studyyear", "pk": 1, "fields": {"name": "Première année", "previous": null}}, {"model": "configuration.studyyear", "pk": 2, "fields": {"name": "Seconde année", "previous": 1}}, {"model": "configuration.studyyear", "pk": 3, "fields": {"name": "Troisième année", "previous": 2}}]
