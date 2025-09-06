@@ -18,13 +18,17 @@ def get_file_extension(file):
 
 
 def handle_course_files(course: Course, user: User, file):
+    """Handle and attach uploaded file to a course"""
     user_upload = handle_files(user, file)
     if user_upload:
         course_upload = CourseUploadFile(course=course, user_upload=user_upload)
         course_upload.save()
 
 
-def save_file_metadata(user_upload: UserUpload, file):
+def save_file_metadata(user_upload: UserUpload, file) -> None:
+    """
+    Save all interesting metadata from file, like size, extension, content_type
+    """
     extension = get_file_extension(file)
     file_metadatas = {
         "name": file.name,
@@ -43,25 +47,27 @@ def save_file_metadata(user_upload: UserUpload, file):
 
 
 def handle_files(user: User, file) -> UserUpload:
+    """
+    Save uploaded file into user directory
+    """
     if not user.has_perm("userupload.upload_files"):
         raise PermissionDenied(f"{user} cannot upload files")
 
-    random_uuid = str(uuid.uuid4())
-    extension = get_file_extension(file)
-    path = Path(f"users/{user.id}") / f"{random_uuid}.{extension}"
+    file_name = f"{uuid.uuid4()}.{get_file_extension(file)}"
+    user_dir = Path(f"users/{user.id}")
 
     absolute_path = Path(BASE_DIR) / UPLOADS_DIR
-    file_path = absolute_path / path
+    file_path = absolute_path / user_dir / file_name
 
-    if not absolute_path.exists():
-        absolute_path.mkdir(exist_ok=True, parents=True)
+    if not (absolute_path / user_dir).exists():
+        (absolute_path / user_dir).mkdir(exist_ok=True, parents=True)
 
     with open(file_path, "wb+") as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
     user_upload = UserUpload(
-        file_path=path,
+        file_path=user_dir / file_name,
         user=user,
     )
 
